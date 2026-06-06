@@ -1,6 +1,14 @@
 ---
 name: intent-to-prompt
-description: Convert rough user intent into precise, complete, agent-ready prompts. Use when the user wants help writing, improving, compiling, or debugging prompts for AI agents or LLM tools; when they say things like "write a prompt for Codex/Claude/Gemini/ChatGPT", "turn this intent into a better prompt", "help me ask an agent to do this", "optimize this prompt", "make this task clearer for an agent", or when a vague task would benefit from clarification before being handed to a coding, research, writing, data, design, automation, image, or general-purpose agent. Works in Chinese and English.
+description: >
+  Convert rough user intent into precise, complete, agent-ready prompts. Use
+  when the user wants help writing, improving, compiling, or debugging prompts
+  for AI agents or LLM tools; when they say things like "write a prompt for
+  Codex/Claude/Gemini/ChatGPT", "turn this intent into a better prompt", "help
+  me ask an agent to do this", "optimize this prompt", "make this task clearer
+  for an agent", or when a vague task would benefit from clarification before
+  being handed to a coding, research, writing, data, design, automation, image,
+  or general-purpose agent. Works in Chinese and English.
 ---
 
 # Intent to Prompt
@@ -34,7 +42,29 @@ Identify the primary task type:
 
 For detailed task-specific modules, read `references/task-modules.md` only for the relevant task type.
 
-### 2. Select the Output Mode
+### 2. Assess Domain Depth Need
+
+Silently assess whether a generic prompt structure is enough. Do not rely only on explicit user keywords. Activate domain-depth mode when the task itself has domain-specific standards, tools, risks, evaluation criteria, or hidden professional workflows that would materially change the prompt.
+
+Use three levels:
+
+- **None**: generic prompt structure and the relevant task module are sufficient.
+- **Light**: add domain-aware checks from existing knowledge without external retrieval.
+- **Deep**: retrieve or ask the agent to retrieve authoritative domain patterns before finalizing the prompt.
+
+Strong signals for Light or Deep:
+
+- the task has implicit professional standards, such as security review, data analysis, contract extraction, production operations, medical/legal/financial workflows, or model evaluation
+- mistakes could affect production systems, customer data, money, compliance, safety, reputation, or important decisions
+- the task depends on a specific platform, framework, API, cloud service, model, schema, or toolchain
+- generic sections like Objective/Context/Output would leave the target agent inventing workflow, schema, metrics, acceptance criteria, or safety boundaries
+- the final prompt needs domain-specific validation, source requirements, examples, failure handling, or decision rules
+
+Do not over-trigger. Use domain-depth mode only when domain patterns would change workflow, constraints, output schema, validation, source requirements, or safety boundaries.
+
+Read `references/domain-pattern-retrieval.md` when domain depth is Light or Deep.
+
+### 3. Select the Output Mode
 
 Choose the lightest mode that satisfies the user's situation:
 
@@ -44,7 +74,7 @@ Choose the lightest mode that satisfies the user's situation:
 
 Default to Agent Prompt when the user mentions Codex, Claude Code, Gemini CLI, an "agent", repository work, tool use, or multi-step execution.
 
-### 3. Audit Prompt Readiness
+### 4. Audit Prompt Readiness
 
 Score the user's intent silently against the rubric in `references/prompt-quality-rubric.md`.
 
@@ -63,7 +93,7 @@ Look for missing or weak:
 
 Do not show a long rubric report unless the user asks. Use the audit to decide whether to ask questions or produce a prompt.
 
-### 4. Decide Whether to Ask Clarifying Questions
+### 5. Decide Whether to Ask Clarifying Questions
 
 Ask questions only when an answer would materially change the final prompt.
 
@@ -78,7 +108,7 @@ For question selection patterns, read `references/clarification-strategy.md`.
 
 When asking questions, stop after the questions. Do not also provide a final prompt unless the user explicitly requested a draft under assumptions.
 
-### 5. Build the Draft Prompt
+### 6. Build the Draft Prompt
 
 Use the template in `references/templates.md`. Include only sections that help execution.
 
@@ -104,13 +134,13 @@ A strong default structure:
 
 Adapt the user's language. If the user writes in Chinese, produce Chinese surrounding text and usually a Chinese prompt unless they ask otherwise. Preserve domain terms and proper nouns.
 
-### 6. Adapt to the Target Agent
+### 7. Adapt to the Target Agent
 
 If the user names a target agent or tool, adapt the prompt to that agent's real capabilities. If they do not name one, keep the prompt agent-neutral.
 
 Read `references/target-agent-adaptation.md` when the target agent matters, especially for Codex, Claude Code, Gemini CLI, ChatGPT, research agents, image/video models, or product-embedded prompts.
 
-### 7. Add Execution Aids When Useful
+### 8. Add Execution Aids When Useful
 
 Use advanced prompting strategies only when they improve likely task completion:
 
@@ -127,7 +157,7 @@ Read `references/examples-and-few-shot-strategy.md` when the task depends on sty
 
 Avoid asking for hidden chain-of-thought. Prefer instructions such as "work step by step internally, then provide the concise result and validation notes."
 
-### 8. Review and Revise Once
+### 9. Review and Revise Once
 
 Before returning the final prompt, internally review the draft and revise it once.
 
@@ -145,7 +175,7 @@ Read `references/prompt-anti-patterns.md` when the draft feels verbose, generic,
 
 Only make revisions that improve execution quality. Do not expand the prompt just to look thorough.
 
-### 9. Return the Result
+### 10. Return the Result
 
 Default output formats:
 
@@ -201,6 +231,7 @@ Before finalizing, verify:
 ## Reference Map
 
 - `references/prompt-quality-rubric.md`: readiness rubric and diagnosis signals.
+- `references/domain-pattern-retrieval.md`: decide when and how to add domain-specific depth.
 - `references/clarification-strategy.md`: when and what to ask before writing the prompt.
 - `references/task-modules.md`: task-specific prompt modules.
 - `references/target-agent-adaptation.md`: adapt prompts to specific agent/tool capabilities.
