@@ -1,0 +1,4 @@
+interface:
+  display_name: "Intent to Prompt"
+  short_description: "Turn rough user intent into agent-ready prompts."
+  default_prompt: "Turn my rough task intent into a precise, complete prompt for an AI agent."
