@@ -4,7 +4,7 @@
 
 It is useful when you know what you want an AI agent to do, but your request is still too vague, underspecified, or hard for an agent to execute reliably.
 
-Instead of only polishing wording, this skill treats prompt engineering as task specification: it clarifies the goal, context, scope, workflow, output format, quality bar, validation path, examples, and target-agent assumptions.
+Instead of only polishing wording, this skill treats prompt engineering as task specification: it clarifies the goal, context, scope, workflow, output format, quality bar, validation path, examples, and target-agent assumptions. For domain-specific tasks, it can also decide when generic prompting is not enough and incorporate authoritative domain patterns into the prompt.
 
 ## Who This Is For
 
@@ -37,6 +37,7 @@ Do not use it for tiny one-off questions where a direct answer is enough.
 - Asks only high-value clarification questions before writing the final prompt.
 - Supports Quick Prompt, Agent Prompt, and Product Prompt modes.
 - Adapts prompts for Codex, Claude Code, Gemini CLI, ChatGPT, research agents, product-embedded prompts, image/video models, and automation agents.
+- Detects when a task needs domain-specific depth and incorporates authoritative domain patterns instead of relying only on generic templates.
 - Uses prompt quality rubrics, anti-pattern checks, few-shot strategy, and validation loops.
 
 ## How It Works
@@ -44,12 +45,13 @@ Do not use it for tiny one-off questions where a direct answer is enough.
 The skill follows a practical prompt-engineering workflow:
 
 1. Classify the task type.
-2. Decide whether to ask clarification questions or proceed with assumptions.
-3. Select the right prompt mode: Quick Prompt, Agent Prompt, or Product Prompt.
-4. Build a draft prompt with objective, context, scope, workflow, output requirements, and validation.
-5. Adapt the prompt to the target agent or tool.
-6. Add examples, schemas, source requirements, stop conditions, or validation loops when they improve execution.
-7. Review and revise once to remove common prompt anti-patterns.
+2. Assess whether the task needs domain-specific depth.
+3. Decide whether to ask clarification questions or proceed with assumptions.
+4. Select the right prompt mode: Quick Prompt, Agent Prompt, or Product Prompt.
+5. Build a draft prompt with objective, context, scope, workflow, output requirements, and validation.
+6. Adapt the prompt to the target agent or tool.
+7. Add examples, schemas, source requirements, stop conditions, or validation loops when they improve execution.
+8. Review and revise once to remove common prompt anti-patterns.
 
 ## Quick Start
 
