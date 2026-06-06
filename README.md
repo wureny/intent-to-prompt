@@ -23,13 +23,12 @@ It helps an AI agent decide when to ask clarification questions, when to proceed
 - Product-embedded reusable prompts
 - Automation agent prompts
 
-## Install
+## Quick Start
 
-Copy the skill folder into your Codex skills directory:
+Install with the Agent Skills CLI:
 
 ```bash
-mkdir -p ~/.codex/skills
-cp -R intent-to-prompt ~/.codex/skills/
+npx skills add wureny/intent-to-prompt --skill intent-to-prompt -a codex -g -y
 ```
 
 Then restart Codex or start a new thread.
@@ -50,6 +49,29 @@ Research whether we should use LangGraph or build our own orchestration layer.
 Use intent-to-prompt to create a reusable product prompt:
 Classify support tickets into billing, bug, feature request, or account access.
 ```
+
+## Alternative Install Methods
+
+### From Inside Codex
+
+You can also ask Codex to install the skill from this GitHub directory:
+
+```text
+$skill-installer install https://github.com/wureny/intent-to-prompt/tree/main/intent-to-prompt
+```
+
+Restart Codex after installation.
+
+### Manual Install
+
+If you prefer not to use `npx`, copy the installable skill folder into your Codex skills directory:
+
+```bash
+mkdir -p ~/.codex/skills
+cp -R intent-to-prompt ~/.codex/skills/
+```
+
+Restart Codex after installation.
 
 ## Example Behavior
 
